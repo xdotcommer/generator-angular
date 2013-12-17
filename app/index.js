@@ -227,6 +227,25 @@ Generator.prototype.askForModules = function askForModules() {
   }.bind(this));
 };
 
+Generator.prototype.askForFoundation = function askForFoundation() {
+  var cb = this.async();
+
+  this.prompt({
+    name: 'foundation',
+    message: 'Would you like to include Foundation?',
+    default: true,
+    warning: 'Yes: All Foundation files will be placed into the styles directory.'
+  }, function (err, props) {
+    if (err) {
+      return this.emit('error', err);
+    }
+
+    this.foundation = props.foundation;
+
+    cb();
+  }.bind(this));  
+};
+
 Generator.prototype.readIndex = function readIndex() {
   this.ngRoute = this.env.options.ngRoute;
   this.indexFile = this.engine(this.read('../../templates/common/index.html'), this);
